@@ -49,6 +49,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
       Route::post('users/{id}/edit','UsersController@update')->name('update');
     });
 
+    Route::name('posts.')->group(function() {
+      Route::get('posts', 'PostsController@index')->name('index');
+      Route::get('posts/create', 'PostsController@create')->name('create');
+      Route::post('posts/create', 'PostsController@store')->name('store');
+      Route::get('posts/{id?}/edit', 'PostsController@edit')->name('edit');
+      Route::post('posts/{id?}/edit','PostsController@update')->name('update');
+    });
+
 });
 
 

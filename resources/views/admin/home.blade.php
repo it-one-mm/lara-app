@@ -16,7 +16,6 @@
                 <a href="{{ route('admin.users.index') }}" class="btn btn-default">All Users</a>
               </div>
             </div>
-
             <div class="card" style="margin: 16px 0;">
               <h4 class="card-header">Manage Roles</h4>
               <div class="card-body">
@@ -28,8 +27,8 @@
             <div class="card" style="margin: 16px 0;">
               <h4 class="card-header">Manage Posts</h4>
               <div class="card-body">
-                <a href="#" class="btn btn-default">All Posts</a>
-                <a href="#" class="btn btn-primary">Create Post</a>
+                <a href="{{ route('admin.posts.index') }}" class="btn btn-default">All Posts</a>
+                <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Create Post</a>
               </div>
             </div>
 

@@ -31,6 +31,9 @@
                       <li class="nav-item {{ Request::is('tickets') ? 'active' : '' }}">
                           <a class="nav-link" href="{{ route('admin.tickets.index') }}">Tickets</a>
                       </li>
+                      <li class="nav-item {{ Request::is('admin') ? 'active' : '' }}">
+                          <a class="nav-link" href="{{ route('admin.pages.home') }}">Admin</a>
+                      </li>
                     @endhasanyrole()
 
                     <li class="nav-item dropdown">
