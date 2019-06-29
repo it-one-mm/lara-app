@@ -13,11 +13,11 @@
                     <h5 class="card-title">Special title treatment</h5>
                     <p><strong>Status:</strong> {{ $ticket->status ? 'Opened' : 'Closed' }}</p>
                     <p class="card-text">{{ $ticket->content }}</p>
-                    <a href="{{ action('TicketsController@edit', $ticket->slug) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ route('admin.tickets.edit', $ticket->slug) }}" class="btn btn-primary">Edit</a>
                     <a class="btn btn-danger" href="#"
                        onclick="javascript: event.preventDefault(); document.getElementById('delete-form').submit();">Delete</a>
 
-                    <form action="{{ action('TicketsController@destroy', $ticket->slug) }}" method="post" id="delete-form" style="display: none;">
+                    <form action="{{ route('admin.tickets.destroy', $ticket->slug) }}" method="post" id="delete-form" style="display: none;">
                         @csrf
                         @method('delete')
 

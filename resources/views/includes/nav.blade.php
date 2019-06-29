@@ -17,9 +17,35 @@
                 <li class="nav-item {{ Request::is('contact') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('contact') }}">Contact</a>
                 </li>
-                <li class="nav-item {{ Request::is('tickets') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('tickets') }}">Tickets</a>
-                </li>
+
+
+                @if(!Auth::check())
+                    <li class="nav-item {{ Request::is('users/register') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('users/register') }}">Register</a>
+                    </li>
+                    <li class="nav-item {{ Request::is('users/login') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('users/login') }}">Login</a>
+                    </li>
+                @else
+                    @hasanyrole('admin|manager')
+                      <li class="nav-item {{ Request::is('tickets') ? 'active' : '' }}">
+                          <a class="nav-link" href="{{ route('admin.tickets.index') }}">Tickets</a>
+                      </li>
+                    @endhasanyrole()
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Logout</a>
+                        </div>
+                    </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @endif
             </ul>
         </div>
     </div>

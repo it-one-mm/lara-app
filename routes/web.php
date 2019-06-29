@@ -11,19 +11,47 @@
 |
 */
 
-Route::view('/', 'home');
-Route::view('about', 'about');
-// Ticket
-Route::get('contact', 'TicketsController@create');
-Route::post('contact', 'TicketsController@store');
-Route::get('tickets', 'TicketsController@index');
-Route::get('ticket/{slug}', 'TicketsController@show');
-Route::get('ticket/{slug}/edit', 'TicketsController@edit');
-Route::patch('ticket/{slug}/edit', 'TicketsController@update');
-Route::delete('ticket/{slug}', 'TicketsController@destroy');
+Route::get('users/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('users/register', 'Auth\RegisterController@register')->name('register');
+Route::get('users/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('users/login', 'Auth\LoginController@login')->name('login');
+
+Route::post('users/logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::view('/', 'home')->name('page.home');
+Route::view('about', 'about')->name('page.about');
+
+Route::get('contact', 'TicketsController@create')->name('tickets.create');
+Route::post('contact', 'TicketsController@store')->name('tickets.store');
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['manager']], function() {
+
+    Route::get('/', 'PagesController@home')->name('pages.home');
+
+    // Ticket
+    Route::name('tickets.')->group(function() {
+        Route::get('tickets', 'TicketsController@index')->name('index');
+        Route::get('ticket/{slug}', 'TicketsController@show')->name('show');
+        Route::get('ticket/{slug}/edit', 'TicketsController@edit')->name('edit');
+        Route::patch('ticket/{slug}/edit', 'TicketsController@update')->name('update');
+        Route::delete('ticket/{slug}', 'TicketsController@destroy')->name('destroy');
+    });
+
+    Route::name('roles.')->group(function() {
+      Route::get('roles', 'RolesController@index')->name('index');
+      Route::get('roles/create', 'RolesController@create')->name('create');
+      Route::post('roles/create', 'RolesController@store')->name('store');
+    });
+
+    Route::name('users.')->group(function() {
+      Route::get('users', 'UsersController@index')->name('index');
+      Route::get('users/{id}/edit', 'UsersController@edit')->name('edit');
+      Route::post('users/{id}/edit','UsersController@update')->name('update');
+    });
+
+});
+
+
+
 // Comment
 Route::post('comment', 'CommentsController@newComment');
-
-
-
-

@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
-@section('title', 'All Tickets | IT ONE')
+@section('title', 'All Users | IT ONE')
 
 @section('content')
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1>All Tickets</h1>
+            <h1>All Users</h1>
             <hr>
             @if(session('status'))
                 <p class="aler alert-success">{{ session('status') }}</p>
@@ -15,18 +15,20 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Roles</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($tickets as $ticket)
+                    @foreach($users as $user)
                     <tr>
-                        <th scope="row">{{ $ticket->id }}</th>
+                        <th scope="row">{{ $user->id }}</th>
                         <td>
-                            <a href="{{ route('admin.tickets.show', $ticket->slug) }}">{{ $ticket->title }}</a>
+                            {{ $user->name }}
                         </td>
-                        <td>{{ $ticket->status ? 'Opened' : 'Closed' }}</td>
+                        <td><a href="{{ route('admin.users.edit', $user->id) }}">{{ $user->email }}</a></td>
+                        <td>{{ implode(", ", $user->roles()->pluck('name')->all()) }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -36,4 +38,3 @@
     </div>
 
 @stop
-
