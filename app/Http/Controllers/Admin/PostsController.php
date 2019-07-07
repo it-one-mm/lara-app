@@ -40,6 +40,7 @@ class PostsController extends Controller
 
       $slug = Str::slug($request->title, '-');
 
+      
       Post::create([
         'title' => $request->get('title'),
         'content' => $request->content,
